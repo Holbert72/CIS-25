@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    
+//Separated n1, n2, and n3 to be each their own variable.
+    float n1;
+    float n2;
+    float n3;
+    
+    cout<<"Enter three numbers.\n";
+    
+//Added 3 new inputs for each variable. 
+    cout<<"Enter the first number.\n";
+    cin>>n1;
+    
+    cout<<"Enter the second number.\n";
+    cin>>n2;
+    
+    cout<<"Enter the third number.\n";
+    cin>>n3;
+    
+//Changed the "if" statement, so that it checks that n1 is bigger than both n2 and n3.
+//Also added the missing parenthesis and curly brackets.
+    if(n1>=n2&&n1>=n3) {
+        
+        cout<<"Largest number: "<<n1;
+        
+//Made this "if" statement into a "else if" statement, also changed the needed conditions to check if n2 is both larger than n1 and n3.
+//Also moved the left curly bracket into the right position and added the missing right curly bracket.
+    } else if (n2>=n1&&n2>=n3) {
+        
+//Swap n1 with n2, to display the right variable.
+        cout<<"Largest number: "<<n2;
+
+//Again, changed the statement into a "else if" statement. Added the missing left curly bracket.
+    } else if (n3>=n1&&n3>=n2) {
+        
+//Swap n2 with n3, again to display the right variable.
+        cout<<"Largest number: "<<n3; 
+        
+    }
+    
+    return 0;
+    
+}
+
+Output:
+Enter three numbers.
+Enter the first number.
+4
+Enter the second number.
+6
+Enter the third number.
+5
+Largest number: 6

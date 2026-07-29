@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    
+    string itemNameone;
+    string itemNametwo;
+    string itemNamethree;
+    string itemNamefour;
+    string itemNamefive;
+    string itemNamesix;
+    string itemNameseven;
+    
+    int quantityone;
+    int quantitytwo;
+    int quantitythree;
+    int quantityfour;
+    int quantityfive;
+    int quantitysix;
+    int quantityseven;
+    
+    float costone;
+    float costtwo;
+    float costthree;
+    float costfour;
+    float costfive;
+    float costsix;
+    float costseven;
+    
+    cout<<"Enter seven items you want to buy.\n";
+    
+    cout<<"Enter the 1st item name: ";
+    cin>>itemNameone;
+    cout<<"Enter its quantity: ";
+    cin>>quantityone;
+    cout<<"Enter its cost: ";
+    cin>>costone;
+    
+    cout<<"Enter the 2nd item name: ";
+    cin>>itemNametwo;
+    cout<<"Enter its quantity: ";
+    cin>>quantitytwo;
+    cout<<"Enter its cost: ";
+    cin>>costtwo;
+    
+    cout<<"Enter the 3rd item name: ";
+    cin>>itemNamethree;
+    cout<<"Enter its quantity: ";
+    cin>>quantitythree;
+    cout<<"Enter its cost: ";
+    cin>>costthree;
+    
+    cout<<"Enter the 4th item name: ";
+    cin>>itemNamefour;
+    cout<<"Enter its quantity: ";
+    cin>>quantityfour;
+    cout<<"Enter its cost: ";
+    cin>>costfour;
+    
+    cout<<"Enter the 5th item name: ";
+    cin>>itemNamefive;
+    cout<<"Enter its quantity: ";
+    cin>>quantityfive;
+    cout<<"Enter its cost: ";
+    cin>>costfive;
+    
+    cout<<"Enter the 6th item name: ";
+    cin>>itemNamesix;
+    cout<<"Enter its quantity: ";
+    cin>>quantitysix;
+    cout<<"Enter its cost: ";
+    cin>>costsix;
+    
+    cout<<"Enter the 7th item name: ";
+    cin>>itemNameseven;
+    cout<<"Enter its quantity: ";
+    cin>>quantityseven;
+    cout<<"Enter its cost: ";
+    cin>>costseven;
+    
+    cout<<"Total cost for "<<itemNameone<<" + "<<itemNametwo<<" + "<<itemNamethree<<" + "<<itemNamefour<<" + "<<itemNamefive<<" + "<<itemNamesix<<" + "<<itemNameseven<<":\n";
+    cout<<"\t$"<<(quantityone*costone)+(quantitytwo*costtwo)+(quantitythree*costthree)+(quantityfour*costfour)+(quantityfive*costfive)+(quantitysix*costsix)+(quantityseven*costseven)<<endl;
+    
+    return 0;
+}
