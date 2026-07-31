@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+class Product {
+    int id;
+    string name;
+    float price;
+public:
+    Product(int i, string n, float p) {
+        id=i;
+        name=n;
+        price=p;
+        cout<<"Constructor called\n";
+    }
+    ~Product() {
+        cout<<"Destructor called\n";
+    }
+    void printDetails() {
+        cout<<"ID: "<<id<<", Name: "<<name<<", Price: $"<<price<<endl;
+    }
+};
+
+int main() {
+    Product p(101, "Notebook", 4.99);
+    p.printDetails();
+    return 0;
+}
+
+Output:
+Constructor called
+ID: 101, Name: Notebook, Price: $4.99
+Destructor called
+
+Knowledge Check:
+1.Constructors can be used to create multiple objects of a class, as well as what data the object has, in a much more streamlined way than individually creating each object. Destructors can release memory from an object when it is destroyed.
+
+2. A constructor and a destructor can be assign to a class. You can have multiple constructors per class, but only one destructor per class. A class is an identifier than an object can be created from. Constructors can make multiple objects, destructors releases the memory when the object is destroyed.
+
+3. The expected output of my program is: the first line will print out "Constructor called," then the second line will print out "ID: 104, Name: Notebook, Price: $4.99", then finally the third line will print out "Destructor called."
+

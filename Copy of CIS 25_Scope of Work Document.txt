@@ -1,0 +1,23 @@
+﻿:::: Scope of Work Document
+
+
+Scope of Work (SOW) -
+Build an application or add a unique twist on a common application. The application can be a game, a business support program, or robot to give a few examples. Projects should focus on creating C++ or Swift applications that utilize long-term data storage.
+Please submit your Scope of Work Document detailing the application you plan to complete.   You last assignment will implement your plan
+Student Project – Scope of Work (SOW)
+Project Title: Final Project (Add a music player to a smart fridge)
+Student Name: Jacob Lei
+Date: 7/30/26
+________________
+
+
+1. Project Overview
+(Write 2–3 sentences about what your project will do.)
+So I am really grasping for straws for ideas, but adding a music player to a smart fridge sounds neat. Pretty sure it has been done, and Bluetooth exists, but it can’t hurt to take a crack at it. So basically, to the smart fridge’s menu, we add a music player option, which would play music based from a music depository from your phone(?).
+2. Features
+* Play music, or at least print out what song is supposed to be playing
+________________
+* Take that music out from an external file
+________________
+* (Maybe) the ability to shuffle music, pause, and create playlists.
+________________

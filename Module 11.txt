@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+struct Patient {
+    int id;
+    string name;
+    int age;
+};
+int main() {
+    Patient patient1;
+    patient1.id=101;
+    patient1.name="John";
+    patient1.age=40;
+    Patient*p = &patient1;
+    
+    cout<<"ID: "<<p->id<<endl;
+    cout<<"Name: "<<p->name<<endl;
+    cout<<"Age: "<<p->age<<endl;
+    
+    return 0;
+}
+
+Knowledge Check:
+1. A pointer is a way to assign an unique address to variables. It acts like a variable, and you can change it like a variable, but its use is more in referencing in uses like dynamic memory or in classes and when creating objects. I used pointers in my program by assigning the variable patient1 with the address p, which is the pointer. I then used the pointer to call out information that is assigned to that variable from the class Patient.
+
+2. The & operator in my program allows me to find the address of my variable patient1.
+
+3. Output:
+ID: 101
+Name: John
+Age: 40
