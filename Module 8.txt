@@ -1,0 +1,343 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <climits>
+#include <fstream>
+
+using namespace std;
+
+struct Patient {
+    int id;
+    string name;
+    int age;
+    string gender;
+    string diagnosis;
+};
+
+int binarySearch(Patient patients[], int size, int searchID) {
+    int left = 0;
+    int right = size - 1;
+    
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        
+        if (patients[mid].id == searchID) {
+            return mid;
+        }
+        
+        if (patients[mid].id < searchID) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return -1;
+}
+
+void showMenu() {
+    cout<<"\nHospital Patient System"<<endl;
+    cout<<"\nType what number option you want. Like 1, 2, or 3\n";
+    cout<<"\n1. Add Patient\n2. Display Patients\n3. Search Patient\n4. Update Patient\n5. Save Patients\n6. Exit\n";
+    cout<<"Enter your choice: ";
+}
+
+void displayPatients(Patient patients[], int size) {
+    
+    cout<<"\n"<<string(80, '=') << endl;
+    cout<<"                              PATIENT RECORDS"<<endl;
+    cout<<string(80, '=')<<endl;
+    
+    cout<<left<<setw(8)<<"ID"<<setw(15)<<"Name"<<setw(8)<<"Age"<<setw(12)<<"Gender"<<"Diagnosis"<<endl;
+    cout<<string(80, '-')<<endl;
+    
+    for (int i = 0; i < size; i++) {
+        cout<<left<<setw(8)<<patients[i].id<<setw(15)<<patients[i].name<<setw(8)<<patients[i].age<<setw(12)<<patients[i].gender<<patients[i].diagnosis<<endl;
+    }
+    cout << string(80, '=') << endl;
+}
+
+void addPatient(Patient*& patients, int& count, int& capacity) {
+    if (count >= capacity) {
+        capacity *= 2;
+        Patient* temp = new Patient[capacity];
+        
+        for (int i = 0; i < count; i++) {
+            temp[i] = patients[i];
+        }
+        
+        delete[] patients;
+        patients = temp;
+    }
+    
+    Patient newPatient;
+    cout<<"\nEnter Patient ID: ";
+    cin>>newPatient.id;
+    cin.ignore();
+    
+    cout<<"Enter Patient Name: ";
+    getline(cin, newPatient.name);
+    
+    cout<<"Enter Patient Age: ";
+    cin>>newPatient.age;
+    cin.ignore();
+    
+    cout<<"Enter Patient Gender: ";
+    getline(cin, newPatient.gender);
+    
+    cout<<"Enter Patient Diagnosis: ";
+    getline(cin, newPatient.diagnosis);
+    
+    patients[count] = newPatient;
+    count++;
+    
+    cout<<"Patient added successfully!\n";
+}
+
+void savePatients(Patient patients[], int count) {
+    fstream file("patients.txt", ios::app);
+    if (file.is_open()) {
+        for (int i = 0; i < count; i++) {
+            file<<patients[i].id<<" "<<patients[i].name<<" "<<patients[i].age<<" "<<patients[i].gender<<" "<<patients[i].diagnosis<<endl;
+        }
+        file.close();
+        cout<<"\nPatients are saved to file."<<endl;
+    } else {
+        cout<<"\nUnable to open file for saving."<<endl;
+    }
+}
+
+int main() {
+    int capacity = 10;
+    int count = 5;
+    
+    Patient* patients = new Patient[capacity];
+    
+    patients[0] = {101, "John", 45, "Male", "Flu"};
+    patients[1] = {102, "Sarah", 30, "Female", "Broken Arm"};
+    patients[2] = {103, "Mike", 52, "Male", "Fever"};
+    patients[3] = {104, "Lisa", 28, "Female", "Concussion"};
+    patients[4] = {105, "David", 60, "Male", "Stomach Ache"};
+    
+    int searchID;
+    int menuOption;
+    
+    do {
+        showMenu();
+        cin >> menuOption;
+        
+        if (menuOption == 1) {
+            int continueAdding;
+            do {
+                addPatient(patients, count, capacity);
+                cout<<"\nType 1 if you would like to continue adding patients, or 0 to return to the menu: ";
+                cin>>continueAdding;
+            } while (continueAdding == 1);
+        }
+        
+        if (menuOption == 2) {
+            int continueBrowsing;
+            do {
+                displayPatients(patients, count);
+                cout<<"\nType 0 to return to the menu: ";
+                cin>>continueBrowsing;
+            } while (continueBrowsing == 1);
+        }
+        
+        if (menuOption == 3) {
+            int continueSearching;
+            do {
+                cout<<"\nEnter Patient ID to search: ";
+                cin>>searchID;
+            
+                int result = binarySearch(patients, count, searchID);
+            
+                if (result != -1) {
+                    cout<<"\nPatient Found\n";
+                    cout<<"ID: "<<patients[result].id<<endl;
+                    cout<<"Name: "<<patients[result].name<<endl;
+                    cout<<"Age: "<<patients[result].age<<endl;
+                    cout<<"Gender: "<<patients[result].gender<<endl;
+                    cout<<"Diagnosis: "<<patients[result].diagnosis<<endl;
+                } else {
+                    cout<<"\nPatient not found.\n";
+                }
+                cout<<"\nType 1 if you would like to continue searching patients, or 0 to return to the menu: ";
+                cin>>continueSearching;
+            } while (continueSearching == 1);
+        }
+        
+        if (menuOption == 4) {
+            int continueUpdating;
+            do {
+                cout<<"\nEnter Patient ID to update: ";
+                cin>>searchID;
+                
+                int result = binarySearch(patients, count, searchID);
+            
+                if (result != -1) {
+                    cout<<"\nPatient Found\n";
+                    cout<<"Enter new diagnosis: ";
+                    cin>>patients[result].diagnosis;
+                    cout<<"Diagnosis updated successfully!\n";
+                } else {
+                    cout<<"\nPatient not found.\n";
+                }
+                cout<<"\nType 1 if you would like to continue updating patients, or 0 to return to the menu: ";
+                cin>>continueUpdating;
+            } while (continueUpdating == 1);
+        }
+        
+        if (menuOption == 5) {
+            int continueSaving;
+            savePatients(patients, count);
+            do {
+                cout<<"\nType 0 to return to the menu: ";
+                cin>>continueSaving;
+            } while (continueSaving == 1);
+        }
+        
+        if (menuOption == 6) {
+            cout<<"\nGood Bye!\n";
+            delete[] patients;
+            return 0;
+        }
+        
+    } while (menuOption != 6);
+    
+    delete[] patients;
+    return 0;
+}
+
+Output:
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 1
+
+Enter Patient ID: 106
+Enter Patient Name: Ikea Shark
+Enter Patient Age: 1
+Enter Patient Gender: Toy
+Enter Patient Diagnosis: Fluffy
+Patient added successfully!
+
+Type 1 if you would like to continue adding patients, or 0 to return to the menu: 1
+
+Enter Patient ID: 107
+Enter Patient Name: Jacob
+Enter Patient Age: 21
+Enter Patient Gender: Male
+Enter Patient Diagnosis: Stress
+Patient added successfully!
+
+Type 1 if you would like to continue adding patients, or 0 to return to the menu: 0
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 2
+
+================================================================================
+                              PATIENT RECORDS
+================================================================================
+ID      Name           Age     Gender      Diagnosis
+--------------------------------------------------------------------------------
+101     John           45      Male        Flu
+102     Sarah          30      Female      Broken Arm
+103     Mike           52      Male        Fever
+104     Lisa           28      Female      Concussion
+105     David          60      Male        Stomach Ache
+106     Ikea Shark     1       Toy         Fluffy
+107     Jacob          21      Male        Stress
+================================================================================
+
+Type 0 to return to the menu: 0
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 4
+
+Enter Patient ID to update: 107
+
+Patient Found
+Enter new diagnosis: Happy
+Diagnosis updated successfully!
+
+Type 1 if you would like to continue updating patients, or 0 to return to the menu: 0
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 3
+
+Enter Patient ID to search: 107
+
+Patient Found
+ID: 107
+Name: Jacob
+Age: 21
+Gender: Male
+Diagnosis: Happy
+
+Type 1 if you would like to continue searching patients, or 0 to return to the menu: 0
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 5
+
+Patients are saved to file.
+
+Type 0 to return to the menu: 0
+
+Hospital Patient System
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Patient
+2. Display Patients
+3. Search Patient
+4. Update Patient
+5. Save Patients
+6. Exit
+Enter your choice: 6
+
+Good Bye!

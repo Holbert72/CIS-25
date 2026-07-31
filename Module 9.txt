@@ -1,0 +1,84 @@
+#include <iostream>
+
+using namespace std;
+
+class User {
+public:
+    virtual void accessLevel() {
+        cout<<"General Access\n";
+    }
+};
+
+class Employee : public User {
+public:
+    void accessLevel() override {
+        cout<<"Employee Access\n";
+    }
+};
+
+class InventoryManager : public Employee {
+public:
+    void accessLevel() override {
+        cout<<"Full Inventory Management Access\n";
+    }
+};
+
+class Admin : public InventoryManager {
+public:
+    void accessLevel() override {
+        cout<<"Admin Access\n";
+    }
+};
+
+void showMenu() {
+    cout<<"===== LOGIN MENU =====\n";
+    cout<<"Type 0 to exit.\n";
+    cout<<"Enter your password: ";
+}
+
+int main() {
+    Employee emp;
+    InventoryManager mgr;
+    Admin adm;
+    int password;
+    int menuOption;
+    showMenu();
+    cin>>password;
+    if (password==24241653) {
+        int continueEmployee=1;
+        do {
+            emp.accessLevel();
+            cout<<"\nYou can view Inventory\n";
+            cout<<"Type 0 to return to menu: ";
+            cin>>continueEmployee;
+        } while (continueEmployee==1);
+    }
+    if (password==36365743) {
+        int continueManager=1;
+        do {
+            mgr.accessLevel();
+            cout<<"\nYou can view and update Inventory\n";
+            cout<<"Type 0 to return to menu: ";
+            cin>>continueManager;
+        } while (continueManager==1);
+    }
+    if (password==48487253) {
+        int continueAdmin=1;
+        do {
+            adm.accessLevel();
+            cout<<"\nFull Access: You can add, update, and delete Inventory\n";
+            cout<<"Type 0 to return to menu: ";
+            cin>>continueAdmin;
+        } while (continueAdmin==1);
+    }
+    return 0;
+}
+
+Output:
+===== LOGIN MENU =====
+Type 0 to exit.
+Enter your password: 48487253
+Admin Access
+
+Full Access: You can add, update, and delete Inventory
+Type 0 to return to menu: 

@@ -1,0 +1,63 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+vector<string> splitCSVLine(const string &line) {
+    vector<string> result;
+    stringstream ss(line);
+    string cell;
+
+    while (getline(ss, cell, ',')) {
+        result.push_back(cell);
+    }
+    return result;
+}
+
+int main() {
+    string csvData =
+        "Name,UIC,Latitude,Longitude,Country\n"
+        "Château-Arnoux – St-Auban,8775123,44.061565,5.997373,FR\n"
+        "York,7082630,53.957966,-1.093159,GB\n"
+        "Exeter Central,7057550,50.726471,-3.532973,GB\n"
+        "Chevremont,8718425,47.621629,6.921473,FR\n"
+        "Branná,5433112,50.147004,17.014842,CZ\n"
+        "Březnice,,5476934,49.558057,13.963859,CZ\n"
+        "Tyseley,7045180,52.453819,-1.839568,GB\n"
+        "Rhymney,7040270,51.759064,-3.289494,GB\n"
+        "Menton,8775648,43.774444,7.4933,FR\n"
+        "Calamocha Nueva,7167021,40.903354,-1.30028,ES";
+
+    istringstream file(csvData);
+    string line;
+
+    while (getline(file, line)) {
+        vector<string>fields=splitCSVLine(line);
+
+        for (const auto &field : fields) {
+            cout<<field<<" | ";
+        }
+        cout<<"\n";
+    }
+
+    return 0;
+}
+
+Output:
+
+Name | UIC | Latitude | Longitude | Country | 
+Château-Arnoux – St-Auban | 8775123 | 44.061565 | 5.997373 | FR | 
+York | 7082630 | 53.957966 | -1.093159 | GB | 
+Exeter Central | 7057550 | 50.726471 | -3.532973 | GB | 
+Chevremont | 8718425 | 47.621629 | 6.921473 | FR | 
+Branná | 5433112 | 50.147004 | 17.014842 | CZ | 
+Březnice |  | 5476934 | 49.558057 | 13.963859 | CZ | 
+Tyseley | 7045180 | 52.453819 | -1.839568 | GB | 
+Rhymney | 7040270 | 51.759064 | -3.289494 | GB | 
+Menton | 8775648 | 43.774444 | 7.4933 | FR | 
+Calamocha Nueva | 7167021 | 40.903354 | -1.30028 | ES | 
+
+//Comments
+//So reading a .csv file in Jdoodle sucks. Period. It was too complicated for me, so I follow an example that simulated a .csv file and read from that. Granted the data is still from a .csv file, just copied and pasted here. Also the way it is formatted is for simplicity and I am running sort of time. I did try to do it in Visual Studio Code, but that was another headache that I do not want to go though again.
