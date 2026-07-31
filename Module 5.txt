@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include "/uploads/math_utils.h"
+#include "/uploads/math_utils.cpp"
+
+using namespace std;
+
+void showMenu() {
+    
+    cout<<"Type what number option you want. Like 1, 2, or 4.\n";
+    cout<<"1. Add\n2. Counter\n4. Exit\n";
+    
+}
+
+int main() {
+    
+    int option;
+    int a;
+    int b;
+    
+    do {
+        
+        showMenu();
+        cin>>option;
+        
+        while (option!=3) {
+        
+            if (option==1) {
+                
+                while (option==1){
+            
+                    cout<<"Type what two numbers you want to add.\nType the first number.\n";
+                    cin>>a;
+                    cout<<"Type the second number.\n";
+                    cin>>b;
+                    cout<<"Sum: "<<add(a,b);
+                    cout<<"\nDo you want to continue? Type 1 or 3.\n";
+                    cin>>option;
+                }
+            
+            }
+            
+            if (option==2) {
+                
+                for (int c=1;c<=7;c++) {
+                 
+                 cout<<"Count "<<c<<endl;
+                    
+                }
+                
+                cout<<"\nType 3 to return back to menu.\n";
+                cin>>option;
+                
+            }
+            
+            if (option==4) {
+                
+                return 0;
+                
+            }
+        }
+        
+    } while (option==3);
+    
+    return 0;
+}
