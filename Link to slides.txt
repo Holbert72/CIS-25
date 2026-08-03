@@ -1,0 +1,8 @@
+Link to slides:
+https://docs.google.com/presentation/d/1ub1KVkOa55wM7rJhanmhb4upX39f15leQyITzyaPY4M/edit?slide=id.p#slide=id.p
+
+Link to GitHub:
+https://github.com/Holbert72/CIS-25
+
+C++ can be used in AI, because of how close it is as a language to the machine. With that it is a base for further programing, and allows AI the building blocks to grow. It pretty intuitive a language, with many similarities with others.
+
