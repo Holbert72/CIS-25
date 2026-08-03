@@ -1,0 +1,289 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <climits>
+#include <fstream>
+
+using namespace std;
+
+class Song {
+public:
+    int id;
+    string name;
+    
+    Song() : id(0), name("") {}
+    
+    Song(int sI, string sN) {
+        id = sI;
+        name = sN;
+    }
+    
+    ~Song() {}
+    
+    void printSong() {
+        cout<<"ID: "<<id<<", Name: "<<name<<endl;
+    }
+};
+
+class Playlist {
+public:
+    int id;
+    string name;
+    
+    Playlist() : id(0), name("") {}
+    
+    Playlist(int pI, string pN) {
+        id = pI;
+        name = pN;
+    }
+    
+    ~Playlist() {}
+    
+    void printPlaylist() {
+        cout<<"ID: "<<id<<", Name: "<<name<<endl;
+    }
+};
+
+int binarySearch(Song songs[], int size, int searchID) {
+    int left = 0;
+    int right = size - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (songs[mid].id == searchID) {
+            return mid;
+        }
+        
+        if (songs[mid].id < searchID) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return -1;
+}
+
+int binarySearch(Playlist playlists[], int size, int searchID) {
+    int left = 0;
+    int right = size - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (playlists[mid].id == searchID) {
+            return mid;
+        }
+        
+        if (playlists[mid].id < searchID) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return -1;
+}
+
+void showMenu1() {
+    cout<<"\nMusic Playlist Manager" << endl;
+    cout<<"\nType what number option you want. Like 1, 2, or 3\n";
+    cout<<"\n1. Add Playlist\n2. Display Playlists\n3. Search Playlist\n4. Exit\n";
+    cout<<"Enter your choice: ";
+}
+
+void showMenu2() {
+    cout<<"\nPlaylist Details" << endl;
+    cout<<"\n1. Update Playlist\n2. Delete Playlist\n3. Back to Main\n";
+    cout<<"Enter your choice: ";
+}
+
+void displayPlaylists(Playlist playlists[], int count) {
+    cout<<"\n"<<string(80, '=')<<endl;
+    cout<<"                              Playlist"<<endl;
+    cout<<string(80, '=')<<endl;
+    cout<<left << setw(8)<<"ID" << setw(15) << "Name"<<endl;
+    cout<<string(80, '-')<<endl;
+    if (exists)
+    ifstream file("playlists.txt");
+    if (file.is_open()) {
+        for (int i = 0; i < count; i++) {
+            cout<<left<<setw(8)<<playlists[i].id<<setw(15)<<playlists[i].name<<endl;
+        }
+        file.close();
+    }
+    cout<<string(80, '=')<<endl;
+}
+
+void addPlaylist(Playlist*& playlists, int& count, int& capacity) {
+    if (count >= capacity) {
+        capacity *= 2;
+        Playlist* temp = new Playlist[capacity];
+        
+        for (int i = 0; i < count; i++) {
+            temp[i] = playlists[i];
+        }
+        
+        delete[] playlists;
+        playlists = temp;
+    }
+    
+    int newId;
+    string newName;
+    
+    cout<<"\nEnter Playlist ID: ";
+    cin>>newId;
+    cin.ignore();
+    
+    cout<<"Enter Playlist Name: ";
+    getline(cin, newName);
+    
+    playlists[count] = Playlist(newId, newName);
+    count++;
+    
+    cout<<"Playlist added successfully!\n";
+}
+
+void newPlaylists(Playlist playlists[], int count) {
+    ofstream file("playlists.txt", ios::app);
+    if (file.is_open()) {
+        for (int i = 0; i < count; i++) {
+            file<<playlists[i].id<<" " <<playlists[i].name<<endl;
+        }
+        file.close();
+    }
+}
+
+int main() {
+    int capacity = 10;
+    int count = 5;
+    
+    Playlist* playlists = new Playlist[capacity];
+    
+    playlists[0] = Playlist(1, "Work");
+    playlists[1] = Playlist(2, "Studying");
+    playlists[2] = Playlist(3, "Cleaning");
+    playlists[3] = Playlist(4, "Fun");
+    playlists[4] = Playlist(5, "Classic Rock");
+    newPlaylists(playlists, count);
+    
+    int searchID;
+    int menuOption;
+    
+    do {
+        showMenu1();
+        cin>>menuOption;
+        
+        if (menuOption == 1) {
+            int continueAdding;
+            do {
+                addPlaylist(playlists, count, capacity);
+                cout<<"\nType 1 if you would like to continue adding playlists, or 0 to return to the menu: ";
+                cin>>continueAdding;
+            } while (continueAdding == 1);
+        }
+        if (menuOption == 2) {
+            int continueBrowsing;
+            do {
+                displayPlaylists(playlists, count);
+                showMenu2();
+                cin>>continueBrowsing;
+            } while (continueBrowsing == 5);
+        }
+        if (menuOption == 3) {
+            int continueSearching;
+            do {
+                cout<<"\nEnter Playlist ID to search: ";
+                cin>>searchID;
+                    
+                int result = binarySearch(playlists, count, searchID);
+                    
+                if (result != -1) {
+                    cout<<"\nPlaylist Found\n";
+                    cout<<"ID: "<<playlists[result].id<<endl;
+                    cout<<"Name: "<<playlists[result].name<<endl;
+                } else {
+                    cout<<"\nPlaylist not found.\n";
+                }
+                cout<<"\nType 1 if you would like to continue searching playlists, or 0 to return to the menu: ";
+                cin>>continueSearching;
+            } while (continueSearching == 1);
+        }
+        if (menuOption == 4) {
+            cout<<"\nGood Bye!\n";
+            delete[] playlists;
+            return 0;
+        }
+    } while (menuOption != 4);
+    
+    delete[] playlists;
+    return 0;
+}
+
+Output:
+
+
+Music Playlist Manager
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Playlist
+2. Display Playlists
+3. Search Playlist
+4. Exit
+Enter your choice: 2
+
+================================================================================
+                              Playlist
+================================================================================
+ID      Name           
+--------------------------------------------------------------------------------
+================================================================================
+
+Playlist Details
+
+1. Update Playlist
+2. Delete Playlist
+3. Back to Main
+Enter your choice: 3
+
+Music Playlist Manager
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Playlist
+2. Display Playlists
+3. Search Playlist
+4. Exit
+Enter your choice: 1
+
+Enter Playlist ID: 1
+Enter Playlist Name: Fun
+Playlist added successfully!
+
+Type 1 if you would like to continue adding playlists, or 0 to return to the menu: 0
+
+Music Playlist Manager
+
+Type what number option you want. Like 1, 2, or 3
+
+1. Add Playlist
+2. Display Playlists
+3. Search Playlist
+4. Exit
+Enter your choice: 2
+
+================================================================================
+                              Playlist
+================================================================================
+ID      Name           
+--------------------------------------------------------------------------------
+================================================================================
+
+Playlist Details
+
+1. Update Playlist
+2. Delete Playlist
+3. Back to Main
+Enter your choice: 
